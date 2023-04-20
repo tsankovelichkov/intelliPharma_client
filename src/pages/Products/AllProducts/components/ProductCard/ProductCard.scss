@@ -1,0 +1,40 @@
+@import "../../../../../variables";
+
+.allMatchedProducts-card-info-container {
+    @include basic-flex;
+
+    .allMatchedProducts-avatar-and-track-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .allMatchedProducts-card-info-text-container {
+        width: 100%;
+        margin: 0 20px;
+    }
+
+    .allMatchedProducts-card-info-additionalInfo-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6px;
+
+        .image-wrapper {
+            width: 75px;
+            img {
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .allMatchedProducts-manufacturer-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .allMatchedProducts-retailCompany-container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

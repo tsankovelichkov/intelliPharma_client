@@ -1,0 +1,26 @@
+@import "../../../variables";
+
+.allMatchedProducts-cards-container {
+    @include basic-flex;
+    margin-bottom: 12px;
+}
+
+.allProducts-controls-container {
+    margin-bottom: 12px;
+}
+
+.allProducts-regularPrice {
+    background-color: #228B22;
+    font-weight: 500;
+    padding: 6px;
+    border-radius: 4px;
+    color: white;
+}
+
+.allProducts-discountPrice {
+    background-color: red;
+    font-weight: 500;
+    padding: 6px;
+    border-radius: 4px;
+    color: white;
+}

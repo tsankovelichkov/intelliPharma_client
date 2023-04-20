@@ -1,0 +1,65 @@
+@import "./variables";
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  border: 0 solid #e5e7eb
+}
+
+body {
+  background-color: $body-background-color;
+}
+
+.general-app-wrapper {
+  height: 100vh;
+  padding: 12px;
+
+  .app-main-container {
+    @include basic-flex;
+    margin-top: 12px;
+    height: calc(100% - 69.5px);
+
+    .app-info-present-container {
+      width: calc(100% - 264px);
+      margin-left: 12px;
+      height: 100%;
+      overflow-y: auto;
+    }
+  }
+}
+
+//notifications//
+
+.Toastify__toast-body {
+  font-family: $main-font;
+  line-height: normal;
+}
+
+//notifications//
+
+//ant-design//
+
+
+.ant-menu-item-selected {
+  background-color: #e6ffeb !important;
+}
+
+.ant-menu-light .ant-menu-item-selected {
+  color: #00d149 !important;
+}
+
+.ant-menu-light .ant-menu-submenu-selected .ant-menu-submenu-title {
+  color: #00d149 !important;
+
+}
+
+.anticon svg {
+  display: block;
+}
+
+.ant-menu-title-content {
+  font-size: 16px;
+}
+
+//ant-design//

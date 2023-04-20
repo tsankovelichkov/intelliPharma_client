@@ -1,0 +1,9 @@
+@import '../../variables';
+
+.dashboardMenu-main-wrapper {
+    background-color: white;
+    height: 100%;
+    width: 264px;
+    overflow-y: auto;
+    @include standard-box-params;
+}

@@ -1,0 +1,50 @@
+@import "../../../variables";
+
+.productInfoCard-page-container {
+    background-color: white;
+    border-radius: 8px;
+
+    .main-information-container {
+        display: flex;
+        align-items: center;
+
+        .image-and-track-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+
+            .image-container {
+                border: 0.1px solid lightgray;
+                border-radius: 8px;
+            }
+        }
+
+        .main-info-wrapper {
+            width: 80%;
+            margin-left: 24px;
+
+            .input-and-track-container {
+                margin-top: 21px;
+                @include basic-flex
+            }
+        }
+
+        .info-cards-container {
+            width: 100%;
+            margin-bottom: 16px;
+
+            .prices-container {
+                width: 100%;
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+            }
+
+            .manufacturer-and-retailCompany-container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}
