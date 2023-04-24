@@ -30,19 +30,33 @@ const MainInformationCard = ({
     function onClickUntrackButton() {
         requests.put(`http://localhost:5000/all-products/${data.id}/update`, {
             track: false
-        }).then(res => {
-            activateNotification('SUCCESS', `Successfully updated!`)
-            setTrack(false)
         })
+            .then(res => JSON.parse(res))
+            .then(res => {
+                if (res.updated) {
+                    activateNotification('SUCCESS', `Successfully updated!`)
+                } else {
+                    activateNotification('SUCCESS', `Successfully updated!`)
+                }
+            }).catch(err => {
+                activateNotification('SUCCESS', `Technical problem. Please try again later!`)
+            })
     }
 
     function onClickTrackButton() {
         requests.put(`http://localhost:5000/all-products/${data.id}/update`, {
             track: true
-        }).then(res => {
-            activateNotification('SUCCESS', `Successfully updated!`)
-            setTrack(true)
         })
+            .then(res => JSON.parse(res))
+            .then(res => {
+                if (res.updated) {
+                    activateNotification('SUCCESS', `Successfully updated!`)
+                } else {
+                    activateNotification('SUCCESS', `Successfully updated!`)
+                }
+            }).catch(err => {
+                activateNotification('SUCCESS', `Technical problem. Please try again later!`)
+            })
     }
 
 

@@ -10,6 +10,7 @@ import { useFetch } from "../../../general-custom-hooks/useFetch";
 import { Divider, Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import requests from "../../../services/requests";
+import { useActivateNotification } from "../../../contexts/notificationsContext";
 
 const AllProducts = () => {
      let [productsFilterSelect, setProductsFilterSelect] = useState()
@@ -21,11 +22,26 @@ const AllProducts = () => {
 
      const { data, loading, error } = useFetch('http://localhost:5000/all-products/EPHARMA')
 
+     let activateNotification = useActivateNotification()
+
      useEffect(() => {
           if (track === false || track === true) {
                requests.put(`http://localhost:5000/all-products/${productId}/update`, {
                     track
-               }).then(res => console.log(res))
+               })
+                    .then(res => JSON.parse(res))
+                    .then(res => {
+                         if (res.updated) {
+                              activateNotification('SUCCESS', `Successfully updated!`)
+                              setTrack(undefined)
+                         } else {
+                              activateNotification('SUCCESS', `Successfully updated!`)
+                              setTrack(undefined)
+                         }
+                    }).catch(err => {
+                         activateNotification('SUCCESS', `Technical problem. Please try again later!`)
+                         setTrack(undefined)
+                    })
           }
      }, [track])
 
