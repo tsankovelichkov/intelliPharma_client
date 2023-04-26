@@ -12,6 +12,7 @@ function dataGridColumnsGenerator(columnsArray, typeOfSize, noId) {
         return {
             field: x.field,
             headerName: x.header ? x.header : x.field,
+            headerClassName: x.headerClass,
             [typeOfSize === 'flex' ? 'flex' : 'width']: x.size,
             editable: x.editable ? x.editable : false,
             renderCell: (params) => {

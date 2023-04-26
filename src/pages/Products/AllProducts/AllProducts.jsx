@@ -22,8 +22,6 @@ const AllProducts = () => {
 
      const { data, loading, error } = useFetch('http://localhost:5000/all-products/EPHARMA')
 
-     console.log(data[0])
-
      let activateNotification = useActivateNotification()
 
      useEffect(() => {
