@@ -1,14 +1,15 @@
 import "./DataGridTable.scss"
 import React from 'react'
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from "@mui/x-data-grid"
 
 const DataGridTable = ({
     columns,
     outsourceData,
     rowHeight,
     loading,
-    onRowClick
+    onRowClick,
+    components
 }) => {
 
     return (
@@ -19,6 +20,7 @@ const DataGridTable = ({
                 rowHeight={rowHeight}
                 sx={{ backgroundColor: "white", borderRadius: 2 }}
                 autoHeight={true}
+                components={components}
                 onRowClick={onRowClick}
                 initialState={{
                     ...outsourceData.initialState,

@@ -16,6 +16,8 @@ const MainInformationCard = ({
     let [track, setTrack] = useState()
     let activateNotification = useActivateNotification()
 
+    console.log(track)
+
 
     useEffect(() => {
         if (data) {
@@ -34,6 +36,7 @@ const MainInformationCard = ({
             .then(res => JSON.parse(res))
             .then(res => {
                 if (res.updated) {
+                    setTrack(false)
                     activateNotification('SUCCESS', `Successfully updated!`)
                 } else {
                     activateNotification('SUCCESS', `Successfully updated!`)
@@ -50,6 +53,7 @@ const MainInformationCard = ({
             .then(res => JSON.parse(res))
             .then(res => {
                 if (res.updated) {
+                    setTrack(true)
                     activateNotification('SUCCESS', `Successfully updated!`)
                 } else {
                     activateNotification('SUCCESS', `Successfully updated!`)
