@@ -23,6 +23,7 @@ const DataGridTable = ({
                 autoHeight={true}
                 components={components}
                 onRowClick={onRowClick}
+                onColumnVisibilityModelChange={(e) => console.log(e)}
                 initialState={{
                     ...outsourceData.initialState,
                     pagination: { paginationModel: { pageSize: 20 } },

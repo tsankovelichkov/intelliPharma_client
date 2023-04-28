@@ -6,34 +6,46 @@ import {
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
   useGridApiContext,
-  gridColumnDefinitionsSelector,
+  gridColumnDefinitionsSelector
 } from '@mui/x-data-grid';
 
-function getExcelData(apiRef) {
+function getExcelData(apiRef, columnsObj) {
   // Select rows and columns
   const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
   const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
 
+  let readyForUseColumnsField = []
+  let invisibleColumnsArray = []
+
+  for (const key in columnsObj) {
+    if (Object.hasOwnProperty.call(columnsObj, key)) {
+      if (!columnsObj[key]) {
+        invisibleColumnsArray.push(key)
+      }
+    }
+  }
+
+  visibleColumnsField.forEach(el => {
+    if (!el.includes(invisibleColumnsArray)) {
+      readyForUseColumnsField.push(el)
+    }
+  })
+
   // Format the data. Here we only keep the value
   const data = filteredSortedRowIds.map((id) => {
     const row = {};
-    visibleColumnsField.forEach((field) => {
+    readyForUseColumnsField.forEach((field) => {
       row[field] = apiRef.current.getCellParams(id, field).value;
     });
     return row;
   });
 
-  return data;
+  return { rows: data, columnNames: readyForUseColumnsField };
 }
 
-function handleExport(apiRef) {
-  const columnNames = gridColumnDefinitionsSelector(apiRef).map( x => {
-    return x.headerName
-  });
+function handleExport(apiRef, columns) {
 
-  const rows = getExcelData(apiRef);
-
-  console.log(rows)
+  const { rows, columnNames} = getExcelData(apiRef, columns);
 
   const worksheet = XLSX.utils.json_to_sheet(rows);
   XLSX.utils.sheet_add_aoa(worksheet, [columnNames], {
@@ -52,7 +64,7 @@ export function ExportMenuItem(props) {
   return (
     <MenuItem
       onClick={() => {
-        handleExport(apiRef);
+        handleExport(apiRef, props.columns);
         // Hide the export menu after the export
         hideMenu?.();
       }}

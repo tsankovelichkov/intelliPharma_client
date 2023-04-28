@@ -24,11 +24,12 @@ const TrackedProducts = () => {
     let [productId, setProductId] = useState()
     let [track, setTrack] = useState()
 
+    let [invisibleColumnsObj,setInvisibleColumnsObj] = useState(invisibleColumns())
+
     let navigate = useNavigate()
 
     let { data, loading, error } = useFetch('http://localhost:5000/tracked-products/EPHARMA')
-
-    let invisibleColumnsObj = invisibleColumns()
+    
 
     useEffect(() => {
         if (track === false || track === true) {
@@ -87,7 +88,7 @@ const TrackedProducts = () => {
     function CustomToolbar(props) {
         return (
             <GridToolbarContainer>
-                <ExportButton />
+                <ExportButton columns={invisibleColumnsObj}/>
             </GridToolbarContainer>
         );
     }
@@ -102,6 +103,7 @@ const TrackedProducts = () => {
                     Toolbar: CustomToolbar,
                 }}
                 columnVisibilityModel={invisibleColumnsObj}
+                onColumnVisibilityModelChange={(obj) => setInvisibleColumnsObj(obj)}
                 loading={loading}
                 onRowClick={(e) => setProductId(e.id)}
             />
