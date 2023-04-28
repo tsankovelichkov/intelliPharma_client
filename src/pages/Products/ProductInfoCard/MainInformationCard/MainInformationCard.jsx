@@ -16,9 +16,6 @@ const MainInformationCard = ({
     let [track, setTrack] = useState()
     let activateNotification = useActivateNotification()
 
-    console.log(track)
-
-
     useEffect(() => {
         if (data) {
             if (data.track) {

@@ -11,40 +11,26 @@ import DataGridTable from "../../../../general-components/DataGridTable/DataGrid
 import { useFetch } from "../../../../general-custom-hooks/useFetch";
 import requests from "../../../../services/requests";
 import { useActivateNotification } from "../../../../contexts/notificationsContext";
+import BasicCheckbox from "../../../../general-components/BasicCheckbox/BasicCheckbox";
 
 const MatchedProductsCard = () => {
 
-     let [matchedProductId,setMatchedProductId] = useState()
-     let [track,setTrack] = useState()
+     let [matchedProductId, setMatchedProductId] = useState()
+     let [retailCompany, setRetailCompany] = useState()
+
+     let [trackValue, setTrackValue] = useState("")
+     let [track, setTrack] = useState()
+
+     console.log(matchedProductId)
+
 
      let params = useParams()
      let activateNotification = useActivateNotification()
 
+     let mainProductId = params.id
+
      const { data, loading, error } = useFetch(`http://localhost:5000/all-products/EPHARMA/matched-products/${params.id}`)
 
-     console.log(data)
-
-     useEffect(() => {
-          if (track === false || track === true) {
-               requests.put(`http://localhost:5000/all-products/EPHARMA/matched-products/${params.id}/update`, {
-                    id:matchedProductId,
-                    track
-               })
-                    .then(res => JSON.parse(res))
-                    .then(res => {
-                         if (res.updated) {
-                              activateNotification('SUCCESS', `Successfully updated!`)
-                              setTrack(undefined)
-                         } else {
-                              activateNotification('SUCCESS', `Successfully updated!`)
-                              setTrack(undefined)
-                         }
-                    }).catch(err => {
-                         activateNotification('SUCCESS', `Technical problem. Please try again later!`)
-                         setTrack(undefined)
-                    })
-          }
-     }, [track])
 
      let columns = dataGridColumnsGenerator([
           { field: "productId", header: "Product ID", size: 0.4 },
@@ -66,7 +52,16 @@ const MatchedProductsCard = () => {
           { field: 'retailCompany', header: "Retail Company", type: "bold", size: 0.7 },
           {
                field: "track", header: "Track", function: (params) => {
-                    return <><Checkbox defaultChecked={params.value} onChange={(e) => setTrack(e.target.checked)} /></>
+                    return <>
+                         <BasicCheckbox
+                              defaultValue={params.value}
+                              url={`http://localhost:5000/all-products/EPHARMA/matched-products/${mainProductId}/update`}
+                              requestData={{
+                                   id: params.id,
+                                   retailCompany: params.row.retailCompany
+                              }}
+                         />
+                    </>
                }, size: 0.4
           },
      ], "flex", true)
@@ -77,7 +72,10 @@ const MatchedProductsCard = () => {
                     columns={columns}
                     outsourceData={data}
                     rowHeight={100}
-                    onRowClick={(e) => setMatchedProductId(e.id)}
+                    onRowClick={(e) => {
+                         setMatchedProductId(e.id)
+                         setRetailCompany(e.row.retailCompany)
+                    }}
                />
           </Card>
      )

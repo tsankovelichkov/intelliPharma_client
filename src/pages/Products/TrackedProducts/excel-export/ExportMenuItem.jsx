@@ -6,7 +6,6 @@ import {
   gridFilteredSortedRowIdsSelector,
   gridVisibleColumnFieldsSelector,
   useGridApiContext,
-  gridColumnDefinitionsSelector
 } from '@mui/x-data-grid';
 
 function getExcelData(apiRef, columnsObj) {

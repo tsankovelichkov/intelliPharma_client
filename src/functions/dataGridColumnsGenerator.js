@@ -42,8 +42,6 @@ function dataGridColumnsGenerator(columnsArray, typeOfSize, noId) {
         result.unshift(idObject)
     }
 
-    console.log(result)
-
     return result
 }
 
