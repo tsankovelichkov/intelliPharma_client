@@ -41,11 +41,11 @@ function trackedProductsColumns() {
                 },
                 {
                     field: `${el} - discountPrice`, header: `${el} - Discount Price`,headerClass: colorArr[i], function: (params) => {
-                        if (params.value) {
-                            if (params.value !== 0) {
-                                return <div className="allProducts-discountPrice ">{params.value}</div>
-                            } else {
+                        if(params.value !== undefined) {
+                            if(params.value === 0) {
                                 return <div className="allProducts-discountPrice ">0.00</div>
+                            }else {
+                                return <div className="allProducts-discountPrice ">{params.value}</div>
                             }
                         }
                     }, size: 250

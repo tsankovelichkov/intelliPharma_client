@@ -5,46 +5,18 @@ import dataGridColumnsGenerator from "../../../functions/dataGridColumnsGenerato
 import DataGridTable from "../../../general-components/DataGridTable/DataGridTable";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-import { Checkbox, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useFetch } from "../../../general-custom-hooks/useFetch";
-import { Divider, Select } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import requests from "../../../services/requests";
-import { useActivateNotification } from "../../../contexts/notificationsContext";
+import { Select } from "antd";
+import { Link } from "react-router-dom";
+import TrackCheckbox from "../../../general-components/TrackCheckbox/TrackCheckbox";
 
 const AllProducts = () => {
      let [productsFilterSelect, setProductsFilterSelect] = useState()
      let [filterData, setFilterData] = useState()
      let [productId, setProductId] = useState()
-     let [track, setTrack] = useState()
-
-     let navigate = useNavigate()
 
      const { data, loading, error } = useFetch('http://localhost:5000/all-products/EPHARMA')
-
-     let activateNotification = useActivateNotification()
-
-     useEffect(() => {
-          if (track === false || track === true) {
-               requests.put(`http://localhost:5000/all-products/${productId}/update`, {
-                    track
-               })
-                    .then(res => JSON.parse(res))
-                    .then(res => {
-                         if (res.updated) {
-                              activateNotification('SUCCESS', `Successfully updated!`)
-                              setTrack(undefined)
-                         } else {
-                              activateNotification('SUCCESS', `Successfully updated!`)
-                              setTrack(undefined)
-                         }
-                    }).catch(err => {
-                         activateNotification('SUCCESS', `Technical problem. Please try again later!`)
-                         setTrack(undefined)
-                    })
-          }
-     }, [track])
-
 
      useEffect(() => {
           if (productsFilterSelect === "matched-products") {
@@ -59,7 +31,10 @@ const AllProducts = () => {
           { field: "productId", header: "Product ID", size: 0.4 },
           {
                field: "track", header: "Track", function: (params) => {
-                    return <><Checkbox defaultChecked={params.value} onChange={(e) => setTrack(e.target.checked)} /></>
+                    return <TrackCheckbox
+                         defaultValue={params.value ? params.value : false}
+                         url={`http://localhost:5000/all-products/${params.id}/update`}
+                    />
                }, size: 0.4
           },
           { field: "image", header: "Image", size: 0.6 },

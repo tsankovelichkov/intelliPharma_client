@@ -3,64 +3,45 @@ import React, { useEffect, useState } from 'react';
 
 import dataGridColumnsGenerator from "../../../functions/dataGridColumnsGenerator";
 import DataGridTable from "../../../general-components/DataGridTable/DataGridTable";
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-import { Checkbox, IconButton } from "@mui/material";
 import { useFetch } from "../../../general-custom-hooks/useFetch";
-import { Divider, Select, Typography } from "antd";
-import { Link, useNavigate } from "react-router-dom";
 import requests from "../../../services/requests";
 import { useActivateNotification } from "../../../contexts/notificationsContext";
 import trackedProductsColumns from "./functions/trackedProductsColumns";
 import { GridToolbarContainer } from "@mui/x-data-grid";
 import { ExportButton } from "./excel-export/ExportExcelButton";
 import invisibleColumns from "./functions/invisibleColumns";
-
-const { Text } = Typography;
+import TrackCheckbox from "../../../general-components/TrackCheckbox/TrackCheckbox";
 
 const TrackedProducts = () => {
 
     let [updatedData, setUpdatedData] = useState()
-    let [productId, setProductId] = useState()
-    let [track, setTrack] = useState()
-
-    let [invisibleColumnsObj,setInvisibleColumnsObj] = useState(invisibleColumns())
-
-    let navigate = useNavigate()
+    let [invisibleColumnsObj, setInvisibleColumnsObj] = useState(invisibleColumns())
 
     let { data, loading, error } = useFetch('http://localhost:5000/tracked-products/EPHARMA')
-    
 
-    useEffect(() => {
-        if (track === false || track === true) {
-            requests.put(`http://localhost:5000/all-products/${productId}/update`, {
-                track
-            })
-                .then(res => JSON.parse(res))
-                .then(res => {
-                    if (res.updated) {
-                        activateNotification('SUCCESS', `Successfully updated!`)
-                        if (!updatedData) {
-                            setUpdatedData(data.filter(x => x._id !== productId))
-                        } else {
-                            setUpdatedData(updatedData.filter(x => x._id !== productId))
-                        }
-                        setTrack(undefined)
-                    }
-                })
+
+    function updateTrackedData(id) {
+        if (!updatedData) {
+            setUpdatedData(data.filter(x => x._id !== id))
+        } else {
+            setUpdatedData(updatedData.filter(x => x._id !== id))
         }
-    }, [track])
-
+    }    
 
     let additionalColumns = trackedProductsColumns()
-
-    let activateNotification = useActivateNotification()
 
     let columns = dataGridColumnsGenerator([
         { field: "productId", header: "Product ID", size: 100 },
         {
             field: "track", header: "Track", function: (params) => {
-                return <><Checkbox defaultChecked={params.value} onChange={(e) => setTrack(e.target.checked)} /></>
+                if(params.value !== undefined) {
+                    return <TrackCheckbox
+                    defaultValue={params.value}
+                    isResponseSuccess={(boolean) => updateTrackedData(params.id)}
+                    url={`http://localhost:5000/all-products/${params.id}/update`}
+                />
+                }
             }, size: 100
         },
         { field: "image", header: "Image", size: 150 },
@@ -74,10 +55,12 @@ const TrackedProducts = () => {
         },
         {
             field: 'discountPrice', header: "Discount Price", function: (params) => {
-                if (params.value !== 0) {
-                    return <div className="allProducts-discountPrice ">{params.value}</div>
-                } else {
-                    return <div className="allProducts-discountPrice ">0.00</div>
+                if (params.value !== undefined) {
+                    if (params.value === 0) {
+                        return <div className="allProducts-discountPrice ">0.00</div>
+                    } else {
+                        return <div className="allProducts-discountPrice ">{params.value}</div>
+                    }
                 }
             }, size: 180
         },
@@ -88,7 +71,7 @@ const TrackedProducts = () => {
     function CustomToolbar(props) {
         return (
             <GridToolbarContainer>
-                <ExportButton columns={invisibleColumnsObj}/>
+                <ExportButton columns={invisibleColumnsObj} />
             </GridToolbarContainer>
         );
     }
@@ -105,7 +88,6 @@ const TrackedProducts = () => {
                 columnVisibilityModel={invisibleColumnsObj}
                 onColumnVisibilityModelChange={(obj) => setInvisibleColumnsObj(obj)}
                 loading={loading}
-                onRowClick={(e) => setProductId(e.id)}
             />
         </div>
     )

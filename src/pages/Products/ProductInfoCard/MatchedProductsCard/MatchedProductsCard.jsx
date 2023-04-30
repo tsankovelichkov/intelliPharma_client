@@ -1,36 +1,20 @@
 import "./MatchedProductsCard.scss"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import { Checkbox, IconButton } from "@mui/material";
-import { Divider, Select } from "antd";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Card } from "antd"
 import dataGridColumnsGenerator from "../../../../functions/dataGridColumnsGenerator";
 import DataGridTable from "../../../../general-components/DataGridTable/DataGridTable";
 import { useFetch } from "../../../../general-custom-hooks/useFetch";
-import requests from "../../../../services/requests";
-import { useActivateNotification } from "../../../../contexts/notificationsContext";
-import BasicCheckbox from "../../../../general-components/BasicCheckbox/BasicCheckbox";
+import TrackCheckbox from "../../../../general-components/TrackCheckbox/TrackCheckbox";
 
 const MatchedProductsCard = () => {
 
-     let [matchedProductId, setMatchedProductId] = useState()
-     let [retailCompany, setRetailCompany] = useState()
-
-     let [trackValue, setTrackValue] = useState("")
-     let [track, setTrack] = useState()
-
-     console.log(matchedProductId)
-
-
      let params = useParams()
-     let activateNotification = useActivateNotification()
-
      let mainProductId = params.id
 
-     const { data, loading, error } = useFetch(`http://localhost:5000/all-products/EPHARMA/matched-products/${params.id}`)
-
+     const { data, loading, error } = useFetch(`http://localhost:5000/all-products/EPHARMA/matched-products/${mainProductId}`)
 
      let columns = dataGridColumnsGenerator([
           { field: "productId", header: "Product ID", size: 0.4 },
@@ -53,7 +37,7 @@ const MatchedProductsCard = () => {
           {
                field: "track", header: "Track", function: (params) => {
                     return <>
-                         <BasicCheckbox
+                         <TrackCheckbox
                               defaultValue={params.value}
                               url={`http://localhost:5000/all-products/EPHARMA/matched-products/${mainProductId}/update`}
                               requestData={{
@@ -72,10 +56,6 @@ const MatchedProductsCard = () => {
                     columns={columns}
                     outsourceData={data}
                     rowHeight={100}
-                    onRowClick={(e) => {
-                         setMatchedProductId(e.id)
-                         setRetailCompany(e.row.retailCompany)
-                    }}
                />
           </Card>
      )
