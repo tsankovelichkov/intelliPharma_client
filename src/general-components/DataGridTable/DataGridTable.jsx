@@ -10,7 +10,8 @@ const DataGridTable = ({
     loading,
     onRowClick,
     components,
-    columnVisibilityModel
+    columnVisibilityModel,
+    onColumnVisibilityModelChange
 }) => {
 
     return (
@@ -29,9 +30,9 @@ const DataGridTable = ({
                     pagination: { paginationModel: { pageSize: 20 } },
                     columns: {
                         columnVisibilityModel: columnVisibilityModel,
-                      },
+                    },
                 }}
-                pageSizeOptions={[20,30,50]}
+                pageSizeOptions={[20, 30, 50]}
                 loading={loading}
             />
         </div>

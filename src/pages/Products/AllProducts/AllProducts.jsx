@@ -46,9 +46,13 @@ const AllProducts = () => {
           },
           {
                field: 'discountPrice', header: "Discount Price", function: (params) => {
-                    if (params.value) {
-                         return <div className="allProducts-discountPrice">{params.value}</div>
-                    }
+                    if (params.value !== undefined) {
+                         if (params.value === 0) {
+                             return <div className="allProducts-discountPrice ">0.00</div>
+                         } else {
+                             return <div className="allProducts-discountPrice ">{params.value}</div>
+                         }
+                     }
                }, size: 0.6
           },
           { field: 'manufacturer', header: "Manufacturer", type: "bold", size: 0.7 },

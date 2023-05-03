@@ -3,12 +3,13 @@ const { Text } = Typography;
 
 
 function trackedProductsColumns() {
-    let array = ["SOPHARMACY", "MEDEA", "REMEDIUM", "GALEN", "BENU"]
+    let array = ["SOPHARMACY", "MEDEA", "REMEDIUM","AFYA", "GALEN", "BENU"]
     let colorArr = [
         "trackedProducts-header-light-blue",
         "trackedProducts-header-light-green",
-        "trackedProducts-header-light-orange",
         "trackedProducts-header-light-red",
+        "trackedProducts-header-light-orange",
+        "trackedProducts-header-light-gold",
         "trackedProducts-header-light-purple"
     ]
 

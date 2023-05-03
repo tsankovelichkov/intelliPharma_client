@@ -1,5 +1,5 @@
 function invisibleColumns() {
-    let pharmaciesArr = ["SOPHARMACY", "MEDEA", "REMEDIUM", "GALEN", "BENU"]
+    let pharmaciesArr = ["SOPHARMACY", "MEDEA","AFYA", "REMEDIUM", "GALEN", "BENU"]
 
     let resultArr = {}
 

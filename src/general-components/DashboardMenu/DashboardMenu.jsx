@@ -6,7 +6,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import JoinLeftIcon from '@mui/icons-material/JoinLeft';
 import { Menu } from "antd"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function getItem(label, key, icon, children, type) {
     return {
@@ -30,11 +30,12 @@ const items = [
 const DashboardMenu = () => {
 
     let navigate = useNavigate()
+    let location = useLocation()
 
     return (
         <div className='dashboardMenu-main-wrapper'>
             <Menu
-                defaultSelectedKeys={['/dashboard']}
+                defaultSelectedKeys={[`${location.pathname}`]}
                 onClick={(e) => navigate(`${e.key}`)}
                 mode="inline"
                 style={{ borderRadius: 12 }}
