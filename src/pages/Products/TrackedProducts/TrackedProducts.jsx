@@ -5,13 +5,14 @@ import dataGridColumnsGenerator from "../../../functions/dataGridColumnsGenerato
 import DataGridTable from "../../../general-components/DataGridTable/DataGridTable";
 
 import { useFetch } from "../../../general-custom-hooks/useFetch";
-import requests from "../../../services/requests";
-import { useActivateNotification } from "../../../contexts/notificationsContext";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import trackedProductsColumns from "./functions/trackedProductsColumns";
 import { GridToolbarContainer } from "@mui/x-data-grid";
 import { ExportButton } from "./excel-export/ExportExcelButton";
 import invisibleColumns from "./functions/invisibleColumns";
 import TrackCheckbox from "../../../general-components/TrackCheckbox/TrackCheckbox";
+import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
 
 const TrackedProducts = () => {
 
@@ -27,22 +28,38 @@ const TrackedProducts = () => {
         } else {
             setUpdatedData(updatedData.filter(x => x._id !== id))
         }
-    }    
+    }
 
     let additionalColumns = trackedProductsColumns()
 
     let columns = dataGridColumnsGenerator([
         { field: "productId", header: "Product ID", size: 100 },
         {
-            field: "track", header: "Track", function: (params) => {
-                if(params.value !== undefined) {
-                    return <TrackCheckbox
-                    defaultValue={params.value}
-                    isResponseSuccess={(boolean) => updateTrackedData(params.id)}
-                    url={`http://localhost:5000/all-products/${params.id}/update`}
-                />
+            field: "enter",
+            header: "Enter",
+            function: (params) => {
+                if (params.row.id) {
+                    return (
+                        <Link to={`/products/all-products/${params.row.id}`}>
+                            <IconButton>
+                                <ExitToAppIcon className="mui-data-grid-orange-button" />
+                            </IconButton>
+                        </Link>
+                    )
                 }
-            }, size: 100
+            },
+            size: 80
+        },
+        {
+            field: "track", header: "Track", function: (params) => {
+                if (params.value !== undefined) {
+                    return <TrackCheckbox
+                        defaultValue={params.value}
+                        isResponseSuccess={(boolean) => updateTrackedData(params.id)}
+                        url={`http://localhost:5000/all-products/${params.id}/update`}
+                    />
+                }
+            }, size: 80
         },
         { field: "image", header: "Image", size: 150 },
         { field: 'title', header: "Title", type: "bold", size: 350 },

@@ -13,17 +13,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
-  let navigate = useNavigate()
   let { notificationStatus, operationType, message } = useNotificationStatus()
   let deactivateNotification = useDeactivateNotification()
 
   let successNotify = notifications.successMessage(message)
   let errorNotify = notifications.errorMessage(message)
-
-  useEffect(() => {
-    navigate("/products/tracked-products")
-  }, [])
-  
 
   useEffect(() => {
     if (notificationStatus == true && operationType == 'SUCCESS') {

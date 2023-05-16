@@ -36,6 +36,7 @@ const DashboardMenu = () => {
         <div className='dashboardMenu-main-wrapper'>
             <Menu
                 defaultSelectedKeys={[`${location.pathname}`]}
+                selectedKeys={[`${location.pathname}`]}
                 onClick={(e) => navigate(`${e.key}`)}
                 mode="inline"
                 style={{ borderRadius: 12 }}

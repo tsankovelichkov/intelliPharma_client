@@ -10,13 +10,14 @@ import { useFetch } from "../../../general-custom-hooks/useFetch";
 import { Select } from "antd";
 import { Link } from "react-router-dom";
 import TrackCheckbox from "../../../general-components/TrackCheckbox/TrackCheckbox";
+import { useAllProductsContext } from "../../../contexts/allProductsContext";
 
 const AllProducts = () => {
      let [productsFilterSelect, setProductsFilterSelect] = useState()
      let [filterData, setFilterData] = useState()
      let [productId, setProductId] = useState()
 
-     const { data, loading, error } = useFetch('http://localhost:5000/all-products/EPHARMA')
+     let {data,loading} = useAllProductsContext()
 
      useEffect(() => {
           if (productsFilterSelect === "matched-products") {
@@ -29,15 +30,15 @@ const AllProducts = () => {
 
      let columns = dataGridColumnsGenerator([
           { field: "productId", header: "Product ID", size: 0.4 },
-          {
-               field: "track", header: "Track", function: (params) => {
-                    return <TrackCheckbox
-                         defaultValue={params.value ? params.value : false}
-                         url={`http://localhost:5000/all-products/${params.id}/update`}
-                    />
-               }, size: 0.4
-          },
-          { field: "image", header: "Image", size: 0.6 },
+          //{
+           //    field: "track", header: "Track", function: (params) => {
+           //         return <TrackCheckbox
+           //              defaultValue={params.value ? params.value : false}
+           //              url={`http://localhost:5000/all-products/${params.id}/update`}
+           //         />
+           //    }, size: 0.4
+          //},
+          //{ field: "image", header: "Image", size: 0.6 },
           { field: 'title', header: "Title", type: "bold", size: 1.4 },
           {
                field: 'regularPrice', header: "Regular Price", function: (params) => {

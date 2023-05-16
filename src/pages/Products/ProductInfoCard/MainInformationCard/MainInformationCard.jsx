@@ -2,9 +2,10 @@ import "./MainInformationCard.scss"
 import React, { useEffect, useState } from 'react'
 
 import { Button, Card, Divider, Input, Typography } from "antd"
-import { WifiOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { WifiOutlined, CloseCircleOutlined, ChromeOutlined } from '@ant-design/icons';
 import requests from "../../../../services/requests";
 import { useActivateNotification } from "../../../../contexts/notificationsContext";
+import { Link } from "react-router-dom";
 
 const { Text } = Typography
 
@@ -91,6 +92,14 @@ const MainInformationCard = ({
                                 Track
                             </Button>
                         }
+                        <a target="_blank" href={data?.link}>
+                            <Button
+                                icon={<ChromeOutlined />}
+                                style={{ marginTop: 8 }}
+                                size="large">
+                                Go to the product page
+                            </Button>
+                        </a>
                     </div>
                     <div className="main-info-wrapper">
                         <div className="info-cards-container">
@@ -120,9 +129,6 @@ const MainInformationCard = ({
                                     <Text style={{ fontSize: 20 }}>{data?.retailCompany}</Text>
                                 </Card>
                             </div>
-                        </div>
-                        <div className="input-and-track-container">
-                            <Input size="large" addonBefore="Website Link" value={data?.link} />
                         </div>
                     </div>
                 </div>

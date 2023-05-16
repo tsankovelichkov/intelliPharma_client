@@ -5,12 +5,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { NotificationProvider } from './contexts/notificationsContext';
+import AllProductsProvider from './contexts/allProductsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <NotificationProvider>
-      <App />
+      <AllProductsProvider>
+        <App />
+      </AllProductsProvider>
     </NotificationProvider>
   </BrowserRouter>
 );
